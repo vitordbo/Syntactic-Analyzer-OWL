@@ -1,0 +1,523 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DATA_TYPE
+    INDIVIDUALS
+    INTEGER
+    RESERVED
+
+Grammar
+
+Rule 0     S' -> ontologia
+Rule 1     ontologia -> descricao_classes descricao_individuals
+Rule 2     descricao_classes -> CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes
+Rule 3     descricao_classes -> CLASS ID SUBCLASSOF expression_class COMMA descricao_classes
+Rule 4     descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+Rule 5     descricao_classes -> <empty>
+Rule 6     expression_class -> ID
+Rule 7     expression_class -> ID AND LPAREN expression_class COMMA expression_class RPAREN
+Rule 8     expression_class -> ID AND LPAREN expression_class COMMA ID SOME ID RPAREN
+Rule 9     expression_class -> ID AND LPAREN ID SOME ID RPAREN
+Rule 10    expression_class -> ID AND LPAREN ID COMMA ID SOME ID RPAREN
+Rule 11    descricao_individuals -> CLASS ID COLON ID COMMA descricao_individuals
+Rule 12    descricao_individuals -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 7 8 9 10
+CLASS                : 2 3 4 11
+COLON                : 11
+COMMA                : 2 3 4 4 4 7 8 10 11
+DATA_TYPE            : 
+DISJOINTCLASSES      : 4
+EQUIVALENTTO         : 2
+ID                   : 2 3 4 4 4 4 6 7 8 8 8 9 9 9 10 10 10 10 11 11
+INDIVIDUALS          : 
+INTEGER              : 
+LPAREN               : 4 7 8 9 10
+RESERVED             : 
+RPAREN               : 4 7 8 9 10
+SOME                 : 8 9 10
+SUBCLASSOF           : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+descricao_classes    : 1 2 3 4
+descricao_individuals : 1 11
+expression_class     : 2 3 7 7 8
+ontologia            : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . ontologia
+    (1) ontologia -> . descricao_classes descricao_individuals
+    (2) descricao_classes -> . CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes
+    (3) descricao_classes -> . CLASS ID SUBCLASSOF expression_class COMMA descricao_classes
+    (4) descricao_classes -> . CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+    (5) descricao_classes -> .
+
+  ! shift/reduce conflict for CLASS resolved as shift
+    CLASS           shift and go to state 3
+    $end            reduce using rule 5 (descricao_classes -> .)
+
+  ! CLASS           [ reduce using rule 5 (descricao_classes -> .) ]
+
+    ontologia                      shift and go to state 1
+    descricao_classes              shift and go to state 2
+
+state 1
+
+    (0) S' -> ontologia .
+
+
+
+state 2
+
+    (1) ontologia -> descricao_classes . descricao_individuals
+    (11) descricao_individuals -> . CLASS ID COLON ID COMMA descricao_individuals
+    (12) descricao_individuals -> .
+
+    CLASS           shift and go to state 5
+    $end            reduce using rule 12 (descricao_individuals -> .)
+
+    descricao_individuals          shift and go to state 4
+
+state 3
+
+    (2) descricao_classes -> CLASS . ID EQUIVALENTTO expression_class COMMA descricao_classes
+    (3) descricao_classes -> CLASS . ID SUBCLASSOF expression_class COMMA descricao_classes
+    (4) descricao_classes -> CLASS . ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+
+    ID              shift and go to state 6
+
+
+state 4
+
+    (1) ontologia -> descricao_classes descricao_individuals .
+
+    $end            reduce using rule 1 (ontologia -> descricao_classes descricao_individuals .)
+
+
+state 5
+
+    (11) descricao_individuals -> CLASS . ID COLON ID COMMA descricao_individuals
+
+    ID              shift and go to state 7
+
+
+state 6
+
+    (2) descricao_classes -> CLASS ID . EQUIVALENTTO expression_class COMMA descricao_classes
+    (3) descricao_classes -> CLASS ID . SUBCLASSOF expression_class COMMA descricao_classes
+    (4) descricao_classes -> CLASS ID . DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+
+    EQUIVALENTTO    shift and go to state 8
+    SUBCLASSOF      shift and go to state 9
+    DISJOINTCLASSES shift and go to state 10
+
+
+state 7
+
+    (11) descricao_individuals -> CLASS ID . COLON ID COMMA descricao_individuals
+
+    COLON           shift and go to state 11
+
+
+state 8
+
+    (2) descricao_classes -> CLASS ID EQUIVALENTTO . expression_class COMMA descricao_classes
+    (6) expression_class -> . ID
+    (7) expression_class -> . ID AND LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> . ID AND LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> . ID AND LPAREN ID SOME ID RPAREN
+    (10) expression_class -> . ID AND LPAREN ID COMMA ID SOME ID RPAREN
+
+    ID              shift and go to state 12
+
+    expression_class               shift and go to state 13
+
+state 9
+
+    (3) descricao_classes -> CLASS ID SUBCLASSOF . expression_class COMMA descricao_classes
+    (6) expression_class -> . ID
+    (7) expression_class -> . ID AND LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> . ID AND LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> . ID AND LPAREN ID SOME ID RPAREN
+    (10) expression_class -> . ID AND LPAREN ID COMMA ID SOME ID RPAREN
+
+    ID              shift and go to state 12
+
+    expression_class               shift and go to state 14
+
+state 10
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES . LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+
+    LPAREN          shift and go to state 15
+
+
+state 11
+
+    (11) descricao_individuals -> CLASS ID COLON . ID COMMA descricao_individuals
+
+    ID              shift and go to state 16
+
+
+state 12
+
+    (6) expression_class -> ID .
+    (7) expression_class -> ID . AND LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> ID . AND LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> ID . AND LPAREN ID SOME ID RPAREN
+    (10) expression_class -> ID . AND LPAREN ID COMMA ID SOME ID RPAREN
+
+    COMMA           reduce using rule 6 (expression_class -> ID .)
+    AND             shift and go to state 17
+
+
+state 13
+
+    (2) descricao_classes -> CLASS ID EQUIVALENTTO expression_class . COMMA descricao_classes
+
+    COMMA           shift and go to state 18
+
+
+state 14
+
+    (3) descricao_classes -> CLASS ID SUBCLASSOF expression_class . COMMA descricao_classes
+
+    COMMA           shift and go to state 19
+
+
+state 15
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN . ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+
+    ID              shift and go to state 20
+
+
+state 16
+
+    (11) descricao_individuals -> CLASS ID COLON ID . COMMA descricao_individuals
+
+    COMMA           shift and go to state 21
+
+
+state 17
+
+    (7) expression_class -> ID AND . LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> ID AND . LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> ID AND . LPAREN ID SOME ID RPAREN
+    (10) expression_class -> ID AND . LPAREN ID COMMA ID SOME ID RPAREN
+
+    LPAREN          shift and go to state 22
+
+
+state 18
+
+    (2) descricao_classes -> CLASS ID EQUIVALENTTO expression_class COMMA . descricao_classes
+    (2) descricao_classes -> . CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes
+    (3) descricao_classes -> . CLASS ID SUBCLASSOF expression_class COMMA descricao_classes
+    (4) descricao_classes -> . CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+    (5) descricao_classes -> .
+
+  ! shift/reduce conflict for CLASS resolved as shift
+    CLASS           shift and go to state 3
+    $end            reduce using rule 5 (descricao_classes -> .)
+
+  ! CLASS           [ reduce using rule 5 (descricao_classes -> .) ]
+
+    descricao_classes              shift and go to state 23
+
+state 19
+
+    (3) descricao_classes -> CLASS ID SUBCLASSOF expression_class COMMA . descricao_classes
+    (2) descricao_classes -> . CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes
+    (3) descricao_classes -> . CLASS ID SUBCLASSOF expression_class COMMA descricao_classes
+    (4) descricao_classes -> . CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+    (5) descricao_classes -> .
+
+  ! shift/reduce conflict for CLASS resolved as shift
+    CLASS           shift and go to state 3
+    $end            reduce using rule 5 (descricao_classes -> .)
+
+  ! CLASS           [ reduce using rule 5 (descricao_classes -> .) ]
+
+    descricao_classes              shift and go to state 24
+
+state 20
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID . COMMA ID COMMA ID RPAREN COMMA descricao_classes
+
+    COMMA           shift and go to state 25
+
+
+state 21
+
+    (11) descricao_individuals -> CLASS ID COLON ID COMMA . descricao_individuals
+    (11) descricao_individuals -> . CLASS ID COLON ID COMMA descricao_individuals
+    (12) descricao_individuals -> .
+
+    CLASS           shift and go to state 5
+    $end            reduce using rule 12 (descricao_individuals -> .)
+
+    descricao_individuals          shift and go to state 26
+
+state 22
+
+    (7) expression_class -> ID AND LPAREN . expression_class COMMA expression_class RPAREN
+    (8) expression_class -> ID AND LPAREN . expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> ID AND LPAREN . ID SOME ID RPAREN
+    (10) expression_class -> ID AND LPAREN . ID COMMA ID SOME ID RPAREN
+    (6) expression_class -> . ID
+    (7) expression_class -> . ID AND LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> . ID AND LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> . ID AND LPAREN ID SOME ID RPAREN
+    (10) expression_class -> . ID AND LPAREN ID COMMA ID SOME ID RPAREN
+
+    ID              shift and go to state 27
+
+    expression_class               shift and go to state 28
+
+state 23
+
+    (2) descricao_classes -> CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes .
+
+    CLASS           reduce using rule 2 (descricao_classes -> CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes .)
+    $end            reduce using rule 2 (descricao_classes -> CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes .)
+
+
+state 24
+
+    (3) descricao_classes -> CLASS ID SUBCLASSOF expression_class COMMA descricao_classes .
+
+    CLASS           reduce using rule 3 (descricao_classes -> CLASS ID SUBCLASSOF expression_class COMMA descricao_classes .)
+    $end            reduce using rule 3 (descricao_classes -> CLASS ID SUBCLASSOF expression_class COMMA descricao_classes .)
+
+
+state 25
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA . ID COMMA ID RPAREN COMMA descricao_classes
+
+    ID              shift and go to state 29
+
+
+state 26
+
+    (11) descricao_individuals -> CLASS ID COLON ID COMMA descricao_individuals .
+
+    $end            reduce using rule 11 (descricao_individuals -> CLASS ID COLON ID COMMA descricao_individuals .)
+
+
+state 27
+
+    (9) expression_class -> ID AND LPAREN ID . SOME ID RPAREN
+    (10) expression_class -> ID AND LPAREN ID . COMMA ID SOME ID RPAREN
+    (6) expression_class -> ID .
+    (7) expression_class -> ID . AND LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> ID . AND LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> ID . AND LPAREN ID SOME ID RPAREN
+    (10) expression_class -> ID . AND LPAREN ID COMMA ID SOME ID RPAREN
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    SOME            shift and go to state 30
+    COMMA           shift and go to state 31
+    AND             shift and go to state 17
+
+  ! COMMA           [ reduce using rule 6 (expression_class -> ID .) ]
+
+
+state 28
+
+    (7) expression_class -> ID AND LPAREN expression_class . COMMA expression_class RPAREN
+    (8) expression_class -> ID AND LPAREN expression_class . COMMA ID SOME ID RPAREN
+
+    COMMA           shift and go to state 32
+
+
+state 29
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID . COMMA ID RPAREN COMMA descricao_classes
+
+    COMMA           shift and go to state 33
+
+
+state 30
+
+    (9) expression_class -> ID AND LPAREN ID SOME . ID RPAREN
+
+    ID              shift and go to state 34
+
+
+state 31
+
+    (10) expression_class -> ID AND LPAREN ID COMMA . ID SOME ID RPAREN
+
+    ID              shift and go to state 35
+
+
+state 32
+
+    (7) expression_class -> ID AND LPAREN expression_class COMMA . expression_class RPAREN
+    (8) expression_class -> ID AND LPAREN expression_class COMMA . ID SOME ID RPAREN
+    (6) expression_class -> . ID
+    (7) expression_class -> . ID AND LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> . ID AND LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> . ID AND LPAREN ID SOME ID RPAREN
+    (10) expression_class -> . ID AND LPAREN ID COMMA ID SOME ID RPAREN
+
+    ID              shift and go to state 36
+
+    expression_class               shift and go to state 37
+
+state 33
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA . ID RPAREN COMMA descricao_classes
+
+    ID              shift and go to state 38
+
+
+state 34
+
+    (9) expression_class -> ID AND LPAREN ID SOME ID . RPAREN
+
+    RPAREN          shift and go to state 39
+
+
+state 35
+
+    (10) expression_class -> ID AND LPAREN ID COMMA ID . SOME ID RPAREN
+
+    SOME            shift and go to state 40
+
+
+state 36
+
+    (8) expression_class -> ID AND LPAREN expression_class COMMA ID . SOME ID RPAREN
+    (6) expression_class -> ID .
+    (7) expression_class -> ID . AND LPAREN expression_class COMMA expression_class RPAREN
+    (8) expression_class -> ID . AND LPAREN expression_class COMMA ID SOME ID RPAREN
+    (9) expression_class -> ID . AND LPAREN ID SOME ID RPAREN
+    (10) expression_class -> ID . AND LPAREN ID COMMA ID SOME ID RPAREN
+
+    SOME            shift and go to state 41
+    RPAREN          reduce using rule 6 (expression_class -> ID .)
+    AND             shift and go to state 17
+
+
+state 37
+
+    (7) expression_class -> ID AND LPAREN expression_class COMMA expression_class . RPAREN
+
+    RPAREN          shift and go to state 42
+
+
+state 38
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID . RPAREN COMMA descricao_classes
+
+    RPAREN          shift and go to state 43
+
+
+state 39
+
+    (9) expression_class -> ID AND LPAREN ID SOME ID RPAREN .
+
+    COMMA           reduce using rule 9 (expression_class -> ID AND LPAREN ID SOME ID RPAREN .)
+    RPAREN          reduce using rule 9 (expression_class -> ID AND LPAREN ID SOME ID RPAREN .)
+
+
+state 40
+
+    (10) expression_class -> ID AND LPAREN ID COMMA ID SOME . ID RPAREN
+
+    ID              shift and go to state 44
+
+
+state 41
+
+    (8) expression_class -> ID AND LPAREN expression_class COMMA ID SOME . ID RPAREN
+
+    ID              shift and go to state 45
+
+
+state 42
+
+    (7) expression_class -> ID AND LPAREN expression_class COMMA expression_class RPAREN .
+
+    COMMA           reduce using rule 7 (expression_class -> ID AND LPAREN expression_class COMMA expression_class RPAREN .)
+    RPAREN          reduce using rule 7 (expression_class -> ID AND LPAREN expression_class COMMA expression_class RPAREN .)
+
+
+state 43
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN . COMMA descricao_classes
+
+    COMMA           shift and go to state 46
+
+
+state 44
+
+    (10) expression_class -> ID AND LPAREN ID COMMA ID SOME ID . RPAREN
+
+    RPAREN          shift and go to state 47
+
+
+state 45
+
+    (8) expression_class -> ID AND LPAREN expression_class COMMA ID SOME ID . RPAREN
+
+    RPAREN          shift and go to state 48
+
+
+state 46
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA . descricao_classes
+    (2) descricao_classes -> . CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes
+    (3) descricao_classes -> . CLASS ID SUBCLASSOF expression_class COMMA descricao_classes
+    (4) descricao_classes -> . CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+    (5) descricao_classes -> .
+
+  ! shift/reduce conflict for CLASS resolved as shift
+    CLASS           shift and go to state 3
+    $end            reduce using rule 5 (descricao_classes -> .)
+
+  ! CLASS           [ reduce using rule 5 (descricao_classes -> .) ]
+
+    descricao_classes              shift and go to state 49
+
+state 47
+
+    (10) expression_class -> ID AND LPAREN ID COMMA ID SOME ID RPAREN .
+
+    COMMA           reduce using rule 10 (expression_class -> ID AND LPAREN ID COMMA ID SOME ID RPAREN .)
+    RPAREN          reduce using rule 10 (expression_class -> ID AND LPAREN ID COMMA ID SOME ID RPAREN .)
+
+
+state 48
+
+    (8) expression_class -> ID AND LPAREN expression_class COMMA ID SOME ID RPAREN .
+
+    COMMA           reduce using rule 8 (expression_class -> ID AND LPAREN expression_class COMMA ID SOME ID RPAREN .)
+    RPAREN          reduce using rule 8 (expression_class -> ID AND LPAREN expression_class COMMA ID SOME ID RPAREN .)
+
+
+state 49
+
+    (4) descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes .
+
+    CLASS           reduce using rule 4 (descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes .)
+    $end            reduce using rule 4 (descricao_classes -> CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for CLASS in state 0 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 18 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 19 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 27 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 46 resolved as shift
