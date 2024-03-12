@@ -2,10 +2,30 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    ALL
+    CARDINALITY
     DATA_TYPE
+    EQ
+    EXACTLY
+    GT
+    HAS
     INDIVIDUALS
-    INTEGER
+    IS
+    LBRACE
+    LBRACKET
+    LT
+    MAX
+    MIN
+    NOT
+    OF
+    ONLY
+    OR
+    PROPERTY
+    RBRACE
+    RBRACKET
     RESERVED
+    THAT
+    VALUE
 
 Grammar
 
@@ -25,21 +45,41 @@ Rule 12    descricao_individuals -> <empty>
 
 Terminals, with rules where they appear
 
+ALL                  : 
 AND                  : 7 8 9 10
+CARDINALITY          : 
 CLASS                : 2 3 4 11
 COLON                : 11
 COMMA                : 2 3 4 4 4 7 8 10 11
 DATA_TYPE            : 
 DISJOINTCLASSES      : 4
+EQ                   : 
 EQUIVALENTTO         : 2
+EXACTLY              : 
+GT                   : 
+HAS                  : 
 ID                   : 2 3 4 4 4 4 6 7 8 8 8 9 9 9 10 10 10 10 11 11
 INDIVIDUALS          : 
-INTEGER              : 
+IS                   : 
+LBRACE               : 
+LBRACKET             : 
 LPAREN               : 4 7 8 9 10
+LT                   : 
+MAX                  : 
+MIN                  : 
+NOT                  : 
+OF                   : 
+ONLY                 : 
+OR                   : 
+PROPERTY             : 
+RBRACE               : 
+RBRACKET             : 
 RESERVED             : 
 RPAREN               : 4 7 8 9 10
 SOME                 : 8 9 10
 SUBCLASSOF           : 3
+THAT                 : 
+VALUE                : 
 error                : 
 
 Nonterminals, with rules where they appear
