@@ -1,9 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-# Analisador Sintático para OWL
-# Alunos: Vítor Duarte e Ricardo Júnior
-
 # Lendo o arquivo no diretório do projeto, contendo o exemplo a ser analisado.
 PATH = 'dados.txt'
 
@@ -31,7 +28,7 @@ reserved = {
     'or': 'OR',
     'only': 'ONLY',
     'class': 'CLASS',
-    'equivalento': 'EQUIVALENTTO',
+    'equivalentto': 'EQUIVALENTTO',
     'individuals': 'INDIVIDUALS',
     'subclassof': 'SUBCLASSOF',
     'disjointclasses': 'DISJOINTCLASSES'
@@ -56,7 +53,9 @@ tokens = [
     'CARDINALITY',
     'DATA_TYPE',
     'PROPERTY',
-    'RESERVED'
+    'RESERVED',
+    'PROPRIEDADE',  # Adicionado
+    'value_type'    # Adicionado
 ] + list(reserved.values())
 
 t_SOME = r'SOME'
@@ -69,15 +68,15 @@ t_THAT = r'THAT'
 t_NOT = r'NOT'
 t_AND = r'AND'
 t_OR = r'OR'
-t_CLASS = r'Class'
-t_EQUIVALENTTO = r'EquivalentTo'
-t_INDIVIDUALS = r'Individuals'
-t_SUBCLASSOF = r'SubClassOf'
-t_DISJOINTCLASSES = r'DisjointClasses'
-t_HAS = r'has'
-t_IS = r'is'
-t_OF = r'Of'
-t_ONLY = r'only'
+t_CLASS = r'CLASS'
+t_EQUIVALENTTO = r'EQUIVALENTTO'
+t_INDIVIDUALS = r'INDIVIDUALS'
+t_SUBCLASSOF = r'SUBCLASSOF'
+t_DISJOINTCLASSES = r'DISJOINTCLASSES'
+t_HAS = r'HAS'
+t_IS = r'IS'
+t_OF = r'OF'
+t_ONLY = r'ONLY'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_LBRACKET = r'\['
@@ -92,8 +91,11 @@ t_EQ = r'='
 
 # Abaixo estão as funções para reconhecer cada token ou palavra reservada da linguagem, contendo as expressões regulares para reconhecer as cadeias.
 def t_RESERVED(t):
-    r'(Class:|Individuals:|EquivalentTo:|SubClassOf:|DisjointClasses:|some|all|and|value|min|max|exactly|only|that|not)'
-    t.type = 'RESERVED'
+    r'individuals:|equivalentto:|subclassof:|disjointclasses:|some|all|and|value|min|max|exactly|only|that|not'
+    if t.value == 'class':
+        t.type = 'CLASS'
+    else:
+        t.type = 'RESERVED'
     return t
 
 def t_DATA_TYPE(t):
@@ -116,9 +118,9 @@ def t_CARDINALITY(t):
     t.type = 'CARDINALITY'
     return t
 
-def t_Class(t):
+def t_ID(t):
     r'[A-Za-z_][A-Za-z0-9_]*'
-    t.type = 'CLASS'
+    t.type = reserved.get(t.value.lower(), 'ID')
     return t
 
 t_ignore = ' \t'
@@ -136,9 +138,13 @@ lexer = lex.lex()
 
 lexer.input(file)
 
+print("Tokens identificados:")
+for token in lexer:
+    print(token)
+
 print("=======================================")
 
-# Regras de produção
+# Regras de produção sintaticas
 def p_ontologia(p):
     '''
     ontologia : descricao_classes descricao_individuals
@@ -148,8 +154,33 @@ def p_descricao_classes(p):
     '''
     descricao_classes : CLASS ID EQUIVALENTTO expression_class COMMA descricao_classes
                       | CLASS ID SUBCLASSOF expression_class COMMA descricao_classes
+                      | CLASS ID SUBCLASSOF expression_class propriedades COMMA descricao_classes
                       | CLASS ID DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA descricao_classes
+                      | CLASS ID EQUIVALENTTO expression_class propriedades COMMA descricao_classes
+                      | CLASS ID SUBCLASSOF expression_class closure_axiom COMMA descricao_classes
+                      | CLASS ID SUBCLASSOF expression_class nested_description COMMA descricao_classes
+                      | CLASS ID SUBCLASSOF expression_class enumerated_instances COMMA descricao_classes
+                      | CLASS ID SUBCLASSOF expression_class covered_class COMMA descricao_classes
                       | 
+    '''
+
+# definição de propriedades de uma classe primitiva
+def p_propriedades(p):
+    '''
+    propriedades : PROPERTY expression_class COMMA propriedades
+                 | 
+    '''
+
+# capturar axioma de fechamento de uma classe
+def p_closure_axiom(p):
+    '''
+    closure_axiom : LPAREN PROPERTY ONLY LPAREN expression_class OR expression_class RPAREN RPAREN
+    '''
+
+# capturar as descrições aninhadas de uma classe
+def p_nested_description(p):
+    '''
+    nested_description : LPAREN PROPERTY value_type RPAREN
     '''
 
 def p_expression_class(p):
@@ -163,8 +194,21 @@ def p_expression_class(p):
 
 def p_descricao_individuals(p):
     '''
-    descricao_individuals : CLASS ID COLON ID COMMA descricao_individuals
+    descricao_individuals : CLASS ID COMMA ID descricao_individuals
+                          | CLASS ID COMMA descricao_individuals
                           | 
+    '''
+
+# capturar as instâncias enumeradas de uma classe
+def p_enumerated_instances(p):
+    '''
+    enumerated_instances : LBRACE ID COMMA ID COMMA ID RBRACE
+    '''
+
+# capturar a definição de uma classe coberta
+def p_covered_class(p):
+    '''
+    covered_class : CLASS ID AND LPAREN expression_class COMMA expression_class COMMA expression_class RPAREN
     '''
 
 def p_error(p):
