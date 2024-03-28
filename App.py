@@ -7,17 +7,15 @@ import matplotlib.pyplot as plt
 # Alunos: Vítor Duarte e Ricardo Júnior
 
 # Lendo o arquivo no diretório do projeto, contendo o exemplo a ser analisado.
-PATH = 'dados.txt'
+PATH = 'dados2.txt'
 
 try:
     with open(PATH, 'r') as arquivo:
-        conteudo = arquivo.read()
+        file = arquivo.read()
 except FileNotFoundError:
     print(f"Arquivo não encontrado '{PATH}' !!!")
 except Exception as e:
     print(f"ERRO: '{e}'")
-
-file = conteudo
 
 # Abaixo estão as palavras reservadas da linguagem e logo em seguida todos os tokens
 reserved = {
@@ -203,6 +201,18 @@ table = ax.table(cellText=df.values,
 # Salvar como PNG 
 plt.savefig('resumo_tabela.png', bbox_inches='tight', dpi=300)
 
+# Declaração de variáveis para contar as ocorrências dos tokens e demais coisas
+found_tokens = []
+property_count = 0
+individual_count = 0
+cardinality_count = 0
+data_type_count = 0
+reserved_count = 0
+disjoint_classes_count = 0
+equivalent_classes_count = 0
+subclass_count = 0
+individual_classes_count = 0
+
 # Regras de produção sintáticas
 def p_ontologia(p):
     '''
@@ -216,12 +226,16 @@ def p_descricao_classes(p):
                       | CLASS ID disjoint_classes descricao_classes
                       | 
     '''
+    global classes_count
+    classes_count += 1
 
 def p_equivalencia_classes(p):
     '''
     equivalencia_classes : EQUIVALENTTO expressao_classes COMMA
                          | EQUIVALENTTO expressao_classes
     '''
+    global equivalent_classes_count
+    equivalent_classes_count += 1
 
 def p_subclasso_classes(p):
     '''
@@ -230,18 +244,24 @@ def p_subclasso_classes(p):
                       | SUBCLASSOF expressao_classes COMMA
                       | SUBCLASSOF expressao_classes
     '''
+    global subclass_count
+    subclass_count += 1
 
 def p_disjoint_classes(p):
     '''
     disjoint_classes : DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA
                      | DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN
     '''
+    global disjoint_classes_count
+    disjoint_classes_count += 1
 
 def p_propriedades(p):
     '''
     propriedades : PROPERTY expressao_classes COMMA
                  | PROPERTY expressao_classes
     '''
+    global property_count
+    property_count += 1
 
 def p_expressao_classes(p):
     '''
@@ -258,6 +278,8 @@ def p_descricao_individuals(p):
                           | CLASS ID COMMA descricao_individuals
                           | 
     '''
+    global individual_classes_count
+    individual_classes_count += 1
 
 def p_error(p):
     print("Erro de sintaxe:", p)
@@ -267,3 +289,11 @@ parser = yacc.yacc()
 
 # Analisa os dados utilizando o parser
 parser.parse(file)
+
+# Resumo da Análise Sintática
+print("==================================== Resumo da Análise Sintática ====================================")
+print(f"#                           Quantidade de Disjunções de Classes: {disjoint_classes_count}\t\t\t#")
+print(f"#                           Quantidade de Equivalências de Classes: {equivalent_classes_count}\t\t\t#")
+print(f"#                           Quantidade de Subclasses: {subclass_count}\t\t\t\t#")
+print(f"#                           Quantidade de Classes Individuais: {individual_classes_count}\t\t\t#")
+print("=======================================================================================================")
