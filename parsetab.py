@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ALL AND CARDINALITY CLASS COLON COMMA DATA_TYPE DISJOINTCLASSES EQ EQUIVALENTTO EXACTLY GT HAS ID INDIVIDUALS IS LBRACE LBRACKET LPAREN LT MAX MIN NOT OF ONLY OR PROPERTY RBRACE RBRACKET RESERVED RPAREN SOME SUBCLASSOF THAT VALUE\n    ontologia : descricao_classes descricao_individuals\n    \n    descricao_classes : CLASS ID equivalencia_classes descricao_classes\n                      | CLASS ID subclasso_classes descricao_classes\n                      | CLASS ID disjoint_classes descricao_classes\n                      | \n    \n    equivalencia_classes : EQUIVALENTTO expressao_classes COMMA\n                         | EQUIVALENTTO expressao_classes\n    \n    subclasso_classes : SUBCLASSOF expressao_classes propriedades COMMA\n                      | SUBCLASSOF expressao_classes propriedades\n                      | SUBCLASSOF expressao_classes COMMA\n                      | SUBCLASSOF expressao_classes\n    \n    disjoint_classes : DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA\n                     | DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN\n    \n    propriedades : PROPERTY expressao_classes COMMA\n                 | PROPERTY expressao_classes\n    \n    expressao_classes : ID\n                      | ID AND LPAREN expressao_classes COMMA expressao_classes RPAREN\n                      | ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN\n                      | ID AND LPAREN ID SOME ID RPAREN\n                      | ID AND LPAREN ID COMMA ID SOME ID RPAREN\n    \n    descricao_individuals : CLASS ID COMMA ID descricao_individuals\n                          | CLASS ID COMMA descricao_individuals\n                          | \n    '
+_lr_signature = 'ALL AND CARDINALITY CLASS COLON COMMA DATA_TYPE DISJOINTCLASSES EQ EQUIVALENTTO EXACTLY GT HAS ID INDIVIDUALS IS LBRACE LBRACKET LPAREN LT MAX MIN NOT OF ONLY OR PROPERTY RBRACE RBRACKET RESERVED RPAREN SOME SUBCLASSOF THAT VALUE\n    ontologia : descricao_classes descricao_individuals\n    \n    descricao_classes : CLASS COMMA ID equivalencia_classes descricao_classes\n                      | CLASS COMMA ID subclasso_classes descricao_classes\n                      | CLASS COMMA ID disjoint_classes descricao_classes\n                      | \n    \n    equivalencia_classes : EQUIVALENTTO COMMA expressao_classes COMMA\n                         | EQUIVALENTTO COMMA expressao_classes\n    \n    subclasso_classes : SUBCLASSOF COMMA expressao_classes propriedades COMMA\n                      | SUBCLASSOF COMMA expressao_classes propriedades\n                      | SUBCLASSOF COMMA expressao_classes COMMA\n                      | SUBCLASSOF COMMA expressao_classes\n    \n    disjoint_classes : DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN COMMA\n                     | DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN\n    \n    propriedades : PROPERTY expressao_classes COMMA\n                 | PROPERTY expressao_classes\n    \n    expressao_classes : ID\n                      | ID AND LPAREN expressao_classes COMMA expressao_classes RPAREN\n                      | ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN\n                      | ID AND LPAREN ID SOME ID RPAREN\n                      | ID AND LPAREN ID COMMA ID SOME ID RPAREN\n    \n    descricao_individuals : CLASS COMMA ID ID descricao_individuals\n                          | CLASS COMMA ID descricao_individuals\n                          | \n    '
     
-_lr_action_items = {'CLASS':([0,2,8,9,10,14,15,16,17,18,19,20,22,24,26,27,32,33,37,48,51,52,55,56,57,],[3,5,3,3,3,5,-2,-3,-4,-7,-16,-11,5,-6,-9,-10,-8,-15,-14,-19,-17,-13,-12,-20,-18,]),'$end':([0,1,2,4,8,9,10,14,15,16,17,18,19,20,22,23,24,26,27,30,32,33,37,48,51,52,55,56,57,],[-5,0,-23,-1,-5,-5,-5,-23,-2,-3,-4,-7,-16,-11,-23,-22,-6,-9,-10,-21,-8,-15,-14,-19,-17,-13,-12,-20,-18,]),'ID':([3,5,11,12,14,21,28,31,34,39,40,41,42,49,50,],[6,7,19,19,22,29,19,35,38,43,44,45,47,53,54,]),'EQUIVALENTTO':([6,],[11,]),'SUBCLASSOF':([6,],[12,]),'DISJOINTCLASSES':([6,],[13,]),'COMMA':([7,18,19,20,26,29,33,35,36,37,38,48,51,52,56,57,],[14,24,-16,27,32,34,37,40,41,-14,42,-19,-17,55,-20,-18,]),'LPAREN':([13,25,],[21,31,]),'PROPERTY':([19,20,48,51,56,57,],[-16,28,-19,-17,-20,-18,]),'AND':([19,35,45,],[25,25,25,]),'SOME':([35,44,45,],[39,49,50,]),'RPAREN':([43,45,46,47,48,51,53,54,56,57,],[48,-16,51,52,-19,-17,56,57,-20,-18,]),}
+_lr_action_items = {'CLASS':([0,2,9,10,11,12,16,18,19,20,25,26,27,29,31,32,36,37,41,52,55,56,59,60,61,],[3,5,5,3,3,3,5,-2,-3,-4,-7,-16,-11,-6,-10,-9,-8,-15,-14,-19,-17,-13,-12,-20,-18,]),'$end':([0,1,2,4,9,10,11,12,16,17,18,19,20,24,25,26,27,29,31,32,36,37,41,52,55,56,59,60,61,],[-5,0,-23,-1,-23,-5,-5,-5,-23,-22,-2,-3,-4,-21,-7,-16,-11,-6,-10,-9,-8,-15,-14,-19,-17,-13,-12,-20,-18,]),'COMMA':([3,5,13,14,15,25,26,27,32,34,37,39,40,41,42,52,55,56,60,61,],[6,7,21,22,23,29,-16,31,36,38,41,44,45,-14,46,-19,-17,59,-20,-18,]),'ID':([6,7,9,21,22,28,33,35,38,43,44,45,46,53,54,],[8,9,16,26,26,34,26,39,42,47,48,49,51,57,58,]),'EQUIVALENTTO':([8,],[13,]),'SUBCLASSOF':([8,],[14,]),'DISJOINTCLASSES':([8,],[15,]),'LPAREN':([23,30,],[28,35,]),'PROPERTY':([26,27,52,55,60,61,],[-16,33,-19,-17,-20,-18,]),'AND':([26,39,49,],[30,30,30,]),'SOME':([39,48,49,],[43,53,54,]),'RPAREN':([47,49,50,51,52,55,57,58,60,61,],[52,-16,55,56,-19,-17,60,61,-20,-18,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'ontologia':([0,],[1,]),'descricao_classes':([0,8,9,10,],[2,15,16,17,]),'descricao_individuals':([2,14,22,],[4,23,30,]),'equivalencia_classes':([6,],[8,]),'subclasso_classes':([6,],[9,]),'disjoint_classes':([6,],[10,]),'expressao_classes':([11,12,28,31,41,],[18,20,33,36,46,]),'propriedades':([20,],[26,]),}
+_lr_goto_items = {'ontologia':([0,],[1,]),'descricao_classes':([0,10,11,12,],[2,18,19,20,]),'descricao_individuals':([2,9,16,],[4,17,24,]),'equivalencia_classes':([8,],[10,]),'subclasso_classes':([8,],[11,]),'disjoint_classes':([8,],[12,]),'expressao_classes':([21,22,33,35,45,],[25,27,37,40,50,]),'propriedades':([27,],[32,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,27 +27,27 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> ontologia","S'",1,None,None,None),
-  ('ontologia -> descricao_classes descricao_individuals','ontologia',2,'p_ontologia','App.py',222),
-  ('descricao_classes -> CLASS ID equivalencia_classes descricao_classes','descricao_classes',4,'p_descricao_classes','App.py',227),
-  ('descricao_classes -> CLASS ID subclasso_classes descricao_classes','descricao_classes',4,'p_descricao_classes','App.py',228),
-  ('descricao_classes -> CLASS ID disjoint_classes descricao_classes','descricao_classes',4,'p_descricao_classes','App.py',229),
-  ('descricao_classes -> <empty>','descricao_classes',0,'p_descricao_classes','App.py',230),
-  ('equivalencia_classes -> EQUIVALENTTO expressao_classes COMMA','equivalencia_classes',3,'p_equivalencia_classes','App.py',237),
-  ('equivalencia_classes -> EQUIVALENTTO expressao_classes','equivalencia_classes',2,'p_equivalencia_classes','App.py',238),
-  ('subclasso_classes -> SUBCLASSOF expressao_classes propriedades COMMA','subclasso_classes',4,'p_subclasso_classes','App.py',245),
-  ('subclasso_classes -> SUBCLASSOF expressao_classes propriedades','subclasso_classes',3,'p_subclasso_classes','App.py',246),
-  ('subclasso_classes -> SUBCLASSOF expressao_classes COMMA','subclasso_classes',3,'p_subclasso_classes','App.py',247),
-  ('subclasso_classes -> SUBCLASSOF expressao_classes','subclasso_classes',2,'p_subclasso_classes','App.py',248),
-  ('disjoint_classes -> DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA','disjoint_classes',9,'p_disjoint_classes','App.py',255),
-  ('disjoint_classes -> DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN','disjoint_classes',8,'p_disjoint_classes','App.py',256),
-  ('propriedades -> PROPERTY expressao_classes COMMA','propriedades',3,'p_propriedades','App.py',263),
-  ('propriedades -> PROPERTY expressao_classes','propriedades',2,'p_propriedades','App.py',264),
-  ('expressao_classes -> ID','expressao_classes',1,'p_expressao_classes','App.py',271),
-  ('expressao_classes -> ID AND LPAREN expressao_classes COMMA expressao_classes RPAREN','expressao_classes',7,'p_expressao_classes','App.py',272),
-  ('expressao_classes -> ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN','expressao_classes',9,'p_expressao_classes','App.py',273),
-  ('expressao_classes -> ID AND LPAREN ID SOME ID RPAREN','expressao_classes',7,'p_expressao_classes','App.py',274),
-  ('expressao_classes -> ID AND LPAREN ID COMMA ID SOME ID RPAREN','expressao_classes',9,'p_expressao_classes','App.py',275),
-  ('descricao_individuals -> CLASS ID COMMA ID descricao_individuals','descricao_individuals',5,'p_descricao_individuals','App.py',280),
-  ('descricao_individuals -> CLASS ID COMMA descricao_individuals','descricao_individuals',4,'p_descricao_individuals','App.py',281),
-  ('descricao_individuals -> <empty>','descricao_individuals',0,'p_descricao_individuals','App.py',282),
+  ('ontologia -> descricao_classes descricao_individuals','ontologia',2,'p_ontologia','App.py',219),
+  ('descricao_classes -> CLASS COMMA ID equivalencia_classes descricao_classes','descricao_classes',5,'p_descricao_classes','App.py',224),
+  ('descricao_classes -> CLASS COMMA ID subclasso_classes descricao_classes','descricao_classes',5,'p_descricao_classes','App.py',225),
+  ('descricao_classes -> CLASS COMMA ID disjoint_classes descricao_classes','descricao_classes',5,'p_descricao_classes','App.py',226),
+  ('descricao_classes -> <empty>','descricao_classes',0,'p_descricao_classes','App.py',227),
+  ('equivalencia_classes -> EQUIVALENTTO COMMA expressao_classes COMMA','equivalencia_classes',4,'p_equivalencia_classes','App.py',234),
+  ('equivalencia_classes -> EQUIVALENTTO COMMA expressao_classes','equivalencia_classes',3,'p_equivalencia_classes','App.py',235),
+  ('subclasso_classes -> SUBCLASSOF COMMA expressao_classes propriedades COMMA','subclasso_classes',5,'p_subclasso_classes','App.py',242),
+  ('subclasso_classes -> SUBCLASSOF COMMA expressao_classes propriedades','subclasso_classes',4,'p_subclasso_classes','App.py',243),
+  ('subclasso_classes -> SUBCLASSOF COMMA expressao_classes COMMA','subclasso_classes',4,'p_subclasso_classes','App.py',244),
+  ('subclasso_classes -> SUBCLASSOF COMMA expressao_classes','subclasso_classes',3,'p_subclasso_classes','App.py',245),
+  ('disjoint_classes -> DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN COMMA','disjoint_classes',10,'p_disjoint_classes','App.py',252),
+  ('disjoint_classes -> DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN','disjoint_classes',9,'p_disjoint_classes','App.py',253),
+  ('propriedades -> PROPERTY expressao_classes COMMA','propriedades',3,'p_propriedades','App.py',260),
+  ('propriedades -> PROPERTY expressao_classes','propriedades',2,'p_propriedades','App.py',261),
+  ('expressao_classes -> ID','expressao_classes',1,'p_expressao_classes','App.py',268),
+  ('expressao_classes -> ID AND LPAREN expressao_classes COMMA expressao_classes RPAREN','expressao_classes',7,'p_expressao_classes','App.py',269),
+  ('expressao_classes -> ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN','expressao_classes',9,'p_expressao_classes','App.py',270),
+  ('expressao_classes -> ID AND LPAREN ID SOME ID RPAREN','expressao_classes',7,'p_expressao_classes','App.py',271),
+  ('expressao_classes -> ID AND LPAREN ID COMMA ID SOME ID RPAREN','expressao_classes',9,'p_expressao_classes','App.py',272),
+  ('descricao_individuals -> CLASS COMMA ID ID descricao_individuals','descricao_individuals',5,'p_descricao_individuals','App.py',277),
+  ('descricao_individuals -> CLASS COMMA ID descricao_individuals','descricao_individuals',4,'p_descricao_individuals','App.py',278),
+  ('descricao_individuals -> <empty>','descricao_individuals',0,'p_descricao_individuals','App.py',279),
 ]

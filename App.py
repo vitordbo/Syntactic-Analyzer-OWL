@@ -221,9 +221,9 @@ def p_ontologia(p):
 
 def p_descricao_classes(p):
     '''
-    descricao_classes : CLASS ID equivalencia_classes descricao_classes
-                      | CLASS ID subclasso_classes descricao_classes
-                      | CLASS ID disjoint_classes descricao_classes
+    descricao_classes : CLASS COMMA ID equivalencia_classes descricao_classes
+                      | CLASS COMMA ID subclasso_classes descricao_classes
+                      | CLASS COMMA ID disjoint_classes descricao_classes
                       | 
     '''
     global classes_count
@@ -231,26 +231,26 @@ def p_descricao_classes(p):
 
 def p_equivalencia_classes(p):
     '''
-    equivalencia_classes : EQUIVALENTTO expressao_classes COMMA
-                         | EQUIVALENTTO expressao_classes
+    equivalencia_classes : EQUIVALENTTO COMMA expressao_classes
+                         |
     '''
     global equivalent_classes_count
     equivalent_classes_count += 1
 
 def p_subclasso_classes(p):
     '''
-    subclasso_classes : SUBCLASSOF expressao_classes propriedades COMMA
-                      | SUBCLASSOF expressao_classes propriedades
-                      | SUBCLASSOF expressao_classes COMMA
-                      | SUBCLASSOF expressao_classes
+    subclasso_classes : SUBCLASSOF COMMA expressao_classes propriedades COMMA
+                      | SUBCLASSOF COMMA expressao_classes propriedades
+                      | SUBCLASSOF COMMA expressao_classes COMMA
+                      | SUBCLASSOF COMMA expressao_classes
     '''
     global subclass_count
     subclass_count += 1
 
 def p_disjoint_classes(p):
     '''
-    disjoint_classes : DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN COMMA
-                     | DISJOINTCLASSES LPAREN ID COMMA ID COMMA ID RPAREN
+    disjoint_classes : DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN COMMA
+                     | DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN
     '''
     global disjoint_classes_count
     disjoint_classes_count += 1
@@ -270,12 +270,13 @@ def p_expressao_classes(p):
                       | ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN
                       | ID AND LPAREN ID SOME ID RPAREN
                       | ID AND LPAREN ID COMMA ID SOME ID RPAREN
+                      |
     '''
 
 def p_descricao_individuals(p):
     '''
-    descricao_individuals : CLASS ID COMMA ID descricao_individuals
-                          | CLASS ID COMMA descricao_individuals
+    descricao_individuals : CLASS COMMA ID ID descricao_individuals
+                          | CLASS COMMA ID descricao_individuals
                           | 
     '''
     global individual_classes_count
