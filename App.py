@@ -56,7 +56,8 @@ tokens = [
     'CARDINALITY',
     'DATA_TYPE',
     'PROPERTY',
-    'RESERVED'
+    'RESERVED',
+    'AT'
 ] + list(reserved.values())
 
 t_SOME = r'SOME'
@@ -89,6 +90,7 @@ t_GT = r'>'
 t_LT = r'<'
 t_COLON = r':'
 t_EQ = r'='
+t_AT = r','
 
 # Abaixo estão as funções para reconhecer cada token ou palavra reservada da linguagem, contendo as expressões regulares para reconhecer as cadeias.
 def t_RESERVED(t):
