@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # Alunos: Vítor Duarte e Ricardo Júnior
 
 # Lendo o arquivo no diretório do projeto, contendo o exemplo a ser analisado.
-PATH = 'dados2.txt'
+PATH = 'dados.txt'
 
 try:
     with open(PATH, 'r') as arquivo:
@@ -31,7 +31,7 @@ reserved = {
     'or': 'OR',
     'only': 'ONLY',
     'class': 'CLASS',
-    'equivalento': 'EQUIVALENTTO',
+    'equivalentto': 'EQUIVALENTO',
     'individuals': 'INDIVIDUALS',
     'subclassof': 'SUBCLASSOF',
     'disjointclasses': 'DISJOINTCLASSES'
@@ -60,24 +60,24 @@ tokens = [
     'AT'
 ] + list(reserved.values())
 
-t_SOME = r'SOME'
-t_ALL = r'ALL'
-t_VALUE = r'VALUE'
-t_MIN = r'MIN'
-t_MAX = r'MAX'
-t_EXACTLY = r'EXACTLY'
-t_THAT = r'THAT'
-t_NOT = r'NOT'
-t_AND = r'AND'
-t_OR = r'OR'
-t_CLASS = r'Class'
-t_EQUIVALENTTO = r'EquivalentTo'
-t_INDIVIDUALS = r'Individuals'
-t_SUBCLASSOF = r'SubClassOf'
-t_DISJOINTCLASSES = r'DisjointClasses'
+t_SOME = r'some'
+t_ALL = r'all'
+t_VALUE = r'value'
+t_MIN = r'min'
+t_MAX = r'max'
+t_EXACTLY = r'exactly'
+t_THAT = r'that'
+t_NOT = r'not'
+t_AND = r'and'
+t_OR = r'or'
+t_CLASS = r'class'
+t_EQUIVALENTO = r'equivalentto'
+t_INDIVIDUALS = r'individuals'
+t_SUBCLASSOF = r'subclassof'
+t_DISJOINTCLASSES = r'disjointclasses'
 t_HAS = r'has'
 t_IS = r'is'
-t_OF = r'Of'
+t_OF = r'of'
 t_ONLY = r'only'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -94,8 +94,8 @@ t_AT = r','
 
 # Abaixo estão as funções para reconhecer cada token ou palavra reservada da linguagem, contendo as expressões regulares para reconhecer as cadeias.
 def t_RESERVED(t):
-    r'(Class:|Individuals:|EquivalentTo:|SubClassOf:|DisjointClasses:|some|all|and|value|min|max|exactly|only|that|not)'
-    t.type = 'RESERVED'
+    r'(individuals|subclassof|disjointclasses|some|all|and|value|min|max|exactly|only|that|not)'
+    t.type = reserved.get(t.value, 'RESERVED')  # Usando o dicionário de palavras reservadas
     return t
 
 def t_DATA_TYPE(t):
@@ -130,7 +130,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    print(f"Caractere ilegal: {t.value[0]}")
+    print(f"Erro léxico: Caractere ilegal '{t.value[0]}' na linha {t.lineno}, posição {t.lexpos}")
     t.lexer.skip(1)
 
 # Inicialização do analisador léxico
@@ -141,11 +141,8 @@ lexer.input(file)
 # Declaração de variáveis para contar as ocorrências dos tokens e demais coisas
 found_tokens = []
 property_count = 0
-individual_count = 0
-cardinalidade_count = 0
-data_type_count = 0
 classes_count = 0
-reserved_count = 0
+primitive_classes_count = 0
 
 # Função principal
 while True:
@@ -155,65 +152,16 @@ while True:
     found_tokens.append((tok.lineno, tok.type, tok.value))
     if tok.type == 'PROPERTY':
         property_count += 1
-    elif tok.type == 'INDIVIDUALS':
-        individual_count += 1
-    elif tok.type == 'CARDINALITY':
-        cardinalidade_count += 1
-    elif tok.type == 'DATA_TYPE':
-        data_type_count += 1
-    elif tok.type == 'RESERVED':
-        reserved_count += 1
     elif tok.type == 'CLASS':
         classes_count += 1
+        if tok.value.islower():
+            primitive_classes_count += 1
 
-# Em seguida está o resumo da análise, assim como o valor de cada lexema por linha
-for lineno, token_type, token_value in found_tokens:
-    print(f'Linha {lineno}: Token: {token_type}, Valor: {token_value}')
-
+# Em seguida está o resumo da análise
 print(f"######################################## Resumo #########################################")
 print(f"#                           Quantidade de Propriedades: {property_count}\t\t\t\t#")
-print(f"#                           Quantidade de Indivíduos: {individual_count}\t\t\t\t#")
 print(f"#                           Quantidade de Classes: {classes_count}\t\t\t\t\t#")
-print(f"#                           Quantidade de Cardinalidades: {cardinalidade_count}\t\t\t\t#")
-print(f"#                           Quantidade de Tipos de dados: {data_type_count}\t\t\t\t#")
-print(f"#                           Quantidade de Palavras reservadas: {reserved_count}\t\t\t#")
 print(f"#########################################################################################")
-
-# Dados do resumo
-data = {
-    "Quantidade de Propriedades": [property_count],
-    "Quantidade de Indivíduos": [individual_count],
-    "Quantidade de Classes": [classes_count],
-    "Quantidade de Cardinalidades": [cardinalidade_count],
-    "Quantidade de Tipos de dados": [data_type_count],
-    "Quantidade de Palavras reservadas": [reserved_count]
-}
-
-# Criar um DataFrame (Para imagem)
-df = pd.DataFrame(data)
-
-# Criar uma tabela
-fig, ax = plt.subplots(figsize=(8, 2))  
-ax.axis('off')
-table = ax.table(cellText=df.values,
-                 colLabels=df.columns,
-                 cellLoc='center',
-                 loc='center')
-
-# Salvar como PNG 
-plt.savefig('resumo_tabela.png', bbox_inches='tight', dpi=300)
-
-# Declaração de variáveis para contar as ocorrências dos tokens e demais coisas
-found_tokens = []
-property_count = 0
-individual_count = 0
-cardinality_count = 0
-data_type_count = 0
-reserved_count = 0
-disjoint_classes_count = 0
-equivalent_classes_count = 0
-subclass_count = 0
-individual_classes_count = 0
 
 # Regras de produção sintáticas
 def p_ontologia(p):
@@ -223,47 +171,39 @@ def p_ontologia(p):
 
 def p_descricao_classes(p):
     '''
-    descricao_classes : CLASS COMMA ID equivalencia_classes descricao_classes
-                      | CLASS COMMA ID subclasso_classes descricao_classes
-                      | CLASS COMMA ID disjoint_classes descricao_classes
-                      | 
+    descricao_classes : CLASS COLON ID subclasso_classes descricao_classes
+                      | CLASS COLON ID
     '''
-    global classes_count
-    classes_count += 1
-
-def p_equivalencia_classes(p):
-    '''
-    equivalencia_classes : EQUIVALENTTO COMMA expressao_classes
-                         |
-    '''
-    global equivalent_classes_count
-    equivalent_classes_count += 1
 
 def p_subclasso_classes(p):
     '''
-    subclasso_classes : SUBCLASSOF COMMA expressao_classes propriedades COMMA
-                      | SUBCLASSOF COMMA expressao_classes propriedades
-                      | SUBCLASSOF COMMA expressao_classes COMMA
-                      | SUBCLASSOF COMMA expressao_classes
+    subclasso_classes : SUBCLASSOF COLON expressao_classes propriedades descricao_classes
+                      | SUBCLASSOF COLON expressao_classes propriedades
+                      | SUBCLASSOF COLON expressao_classes descricao_classes
+                      | SUBCLASSOF COLON expressao_classes
+                      | DISJOINTCLASSES COLON expressao_classes descricao_classes
+                      | DISJOINTCLASSES COLON expressao_classes
+                      | EQUIVALENTO COLON expressao_classes descricao_classes
+                      | EQUIVALENTO COLON expressao_classes
+                      | empty
     '''
-    global subclass_count
-    subclass_count += 1
 
-def p_disjoint_classes(p):
+def p_properties(p):
     '''
-    disjoint_classes : DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN COMMA
-                     | DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN
-    '''
-    global disjoint_classes_count
-    disjoint_classes_count += 1
-
-def p_propriedades(p):
-    '''
-    propriedades : PROPERTY expressao_classes COMMA
-                 | PROPERTY expressao_classes
+    propriedades : expressao_classes descricao_classes propriedades
+                 | expressao_classes propriedades
+                 | empty
     '''
     global property_count
     property_count += 1
+
+def p_descricao_individuals(p):
+    '''
+    descricao_individuals : INDIVIDUALS COLON ID COMMA ID descricao_individuals
+                          | INDIVIDUALS COLON ID
+                          | empty
+    '''
+    pass
 
 def p_expressao_classes(p):
     '''
@@ -272,31 +212,23 @@ def p_expressao_classes(p):
                       | ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN
                       | ID AND LPAREN ID SOME ID RPAREN
                       | ID AND LPAREN ID COMMA ID SOME ID RPAREN
-                      |
     '''
-
-def p_descricao_individuals(p):
-    '''
-    descricao_individuals : CLASS COMMA ID ID descricao_individuals
-                          | CLASS COMMA ID descricao_individuals
-                          | 
-    '''
-    global individual_classes_count
-    individual_classes_count += 1
 
 def p_error(p):
-    print("Erro de sintaxe:", p)
+    if p:
+        print(f"Erro sintático: Erro de sintaxe em '{p.value}' na linha {p.lineno}, posição {p.lexpos}")
+        print(f"Trecho do código: {file.splitlines()[p.lineno - 1]}")
+    else:
+        print("Erro sintático: Fim inesperado do arquivo")
+
+def p_empty(p):
+    '''
+    empty :
+    '''
+    pass
 
 # Construção do analisador Sintático
 parser = yacc.yacc()
 
 # Analisa os dados utilizando o parser
 parser.parse(file)
-
-# Resumo da Análise Sintática
-print("==================================== Resumo da Análise Sintática ====================================")
-print(f"#                           Quantidade de Disjunções de Classes: {disjoint_classes_count}\t\t\t#")
-print(f"#                           Quantidade de Equivalências de Classes: {equivalent_classes_count}\t\t\t#")
-print(f"#                           Quantidade de Subclasses: {subclass_count}\t\t\t\t#")
-print(f"#                           Quantidade de Classes Individuais: {individual_classes_count}\t\t\t#")
-print("=======================================================================================================")

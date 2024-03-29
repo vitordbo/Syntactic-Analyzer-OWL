@@ -3,16 +3,14 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     ALL
+    AT
     CARDINALITY
-    COLON
     DATA_TYPE
     EQ
     EXACTLY
     GT
     HAS
-    INDIVIDUALS
     IS
-    LBRACE
     LBRACKET
     LT
     MAX
@@ -21,7 +19,7 @@ Unused terminals:
     OF
     ONLY
     OR
-    RBRACE
+    PROPERTY
     RBRACKET
     RESERVED
     THAT
@@ -31,51 +29,53 @@ Grammar
 
 Rule 0     S' -> ontologia
 Rule 1     ontologia -> descricao_classes descricao_individuals
-Rule 2     descricao_classes -> CLASS COMMA ID equivalencia_classes descricao_classes
-Rule 3     descricao_classes -> CLASS COMMA ID subclasso_classes descricao_classes
-Rule 4     descricao_classes -> CLASS COMMA ID disjoint_classes descricao_classes
-Rule 5     descricao_classes -> <empty>
-Rule 6     equivalencia_classes -> EQUIVALENTTO COMMA expressao_classes COMMA
-Rule 7     equivalencia_classes -> EQUIVALENTTO COMMA expressao_classes
-Rule 8     subclasso_classes -> SUBCLASSOF COMMA expressao_classes propriedades COMMA
-Rule 9     subclasso_classes -> SUBCLASSOF COMMA expressao_classes propriedades
-Rule 10    subclasso_classes -> SUBCLASSOF COMMA expressao_classes COMMA
-Rule 11    subclasso_classes -> SUBCLASSOF COMMA expressao_classes
-Rule 12    disjoint_classes -> DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN COMMA
-Rule 13    disjoint_classes -> DISJOINTCLASSES COMMA LPAREN ID COMMA ID COMMA ID RPAREN
-Rule 14    propriedades -> PROPERTY expressao_classes COMMA
-Rule 15    propriedades -> PROPERTY expressao_classes
-Rule 16    expressao_classes -> ID
-Rule 17    expressao_classes -> ID AND LPAREN expressao_classes COMMA expressao_classes RPAREN
-Rule 18    expressao_classes -> ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN
-Rule 19    expressao_classes -> ID AND LPAREN ID SOME ID RPAREN
-Rule 20    expressao_classes -> ID AND LPAREN ID COMMA ID SOME ID RPAREN
-Rule 21    expressao_classes -> NULL
-Rule 22    descricao_individuals -> CLASS COMMA ID ID descricao_individuals
-Rule 23    descricao_individuals -> CLASS COMMA ID descricao_individuals
-Rule 24    descricao_individuals -> <empty>
+Rule 2     descricao_classes -> CLASS COLON ID subclasso_classes descricao_classes
+Rule 3     descricao_classes -> CLASS COLON ID
+Rule 4     subclasso_classes -> SUBCLASSOF COLON expressao_classes propriedades descricao_classes
+Rule 5     subclasso_classes -> SUBCLASSOF COLON expressao_classes propriedades
+Rule 6     subclasso_classes -> SUBCLASSOF COLON expressao_classes descricao_classes
+Rule 7     subclasso_classes -> SUBCLASSOF COLON expressao_classes
+Rule 8     subclasso_classes -> DISJOINTCLASSES COLON expressao_classes descricao_classes
+Rule 9     subclasso_classes -> DISJOINTCLASSES COLON expressao_classes
+Rule 10    subclasso_classes -> EQUIVALENTO COLON expressao_classes descricao_classes
+Rule 11    subclasso_classes -> EQUIVALENTO COLON expressao_classes
+Rule 12    subclasso_classes -> empty
+Rule 13    propriedades -> expressao_classes descricao_classes propriedades
+Rule 14    propriedades -> expressao_classes propriedades
+Rule 15    propriedades -> empty
+Rule 16    descricao_individuals -> INDIVIDUALS COLON ID COMMA ID descricao_individuals
+Rule 17    descricao_individuals -> INDIVIDUALS COLON ID
+Rule 18    descricao_individuals -> empty
+Rule 19    expressao_classes -> ID
+Rule 20    expressao_classes -> ID AND LPAREN expressao_classes COMMA expressao_classes RPAREN
+Rule 21    expressao_classes -> ID AND LPAREN expressao_classes COMMA ID SOME ID RPAREN
+Rule 22    expressao_classes -> ID AND LPAREN ID SOME ID RPAREN
+Rule 23    expressao_classes -> ID AND LPAREN ID COMMA ID SOME ID RPAREN
+Rule 24    expressao_classes -> LBRACE value_set RBRACE
+Rule 25    empty -> <empty>
 
 Terminals, with rules where they appear
 
 ALL                  : 
-AND                  : 17 18 19 20
+AND                  : 20 21 22 23
+AT                   : 
 CARDINALITY          : 
-CLASS                : 2 3 4 22 23
-COLON                : 
-COMMA                : 2 3 4 6 6 7 8 8 9 10 10 11 12 12 12 12 13 13 13 14 17 18 20 22 23
+CLASS                : 2 3
+COLON                : 2 3 4 5 6 7 8 9 10 11 16 17
+COMMA                : 16 20 21 23
 DATA_TYPE            : 
-DISJOINTCLASSES      : 12 13
+DISJOINTCLASSES      : 8 9
 EQ                   : 
-EQUIVALENTTO         : 6 7
+EQUIVALENTO          : 10 11
 EXACTLY              : 
 GT                   : 
 HAS                  : 
-ID                   : 2 3 4 12 12 12 13 13 13 16 17 18 18 18 19 19 19 20 20 20 20 22 22 23
-INDIVIDUALS          : 
+ID                   : 2 3 16 16 17 19 20 21 21 21 22 22 22 23 23 23 23
+INDIVIDUALS          : 16 17
 IS                   : 
-LBRACE               : 
+LBRACE               : 24
 LBRACKET             : 
-LPAREN               : 12 13 17 18 19 20
+LPAREN               : 20 21 22 23
 LT                   : 
 MAX                  : 
 MIN                  : 
@@ -83,26 +83,25 @@ NOT                  :
 OF                   : 
 ONLY                 : 
 OR                   : 
-PROPERTY             : 14 15
-RBRACE               : 
+PROPERTY             : 
+RBRACE               : 24
 RBRACKET             : 
 RESERVED             : 
-RPAREN               : 12 13 17 18 19 20
-SOME                 : 18 19 20
-SUBCLASSOF           : 8 9 10 11
+RPAREN               : 20 21 22 23
+SOME                 : 21 22 23
+SUBCLASSOF           : 4 5 6 7
 THAT                 : 
 VALUE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-NULL                 : 21
-descricao_classes    : 1 2 3 4
-descricao_individuals : 1 22 23
-disjoint_classes     : 4
-equivalencia_classes : 2
-expressao_classes    : 6 7 8 9 10 11 14 15 17 17 18
+descricao_classes    : 1 2 4 6 8 10 13
+descricao_individuals : 1 16
+empty                : 12 15 18
+expressao_classes    : 4 5 6 7 8 9 10 11 13 14 20 20 21
 ontologia            : 0
-propriedades         : 8 9
-subclasso_classes    : 3
+propriedades         : 4 5 13 14
+subclasso_classes    : 2
+value_set            : 24
 
