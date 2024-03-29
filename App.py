@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # Alunos: Vítor Duarte e Ricardo Júnior
 
 # Lendo o arquivo no diretório do projeto, contendo o exemplo a ser analisado.
-PATH = 'dados.txt'
+PATH = 'dados2.txt'
 
 try:
     with open(PATH, 'r') as arquivo:
@@ -217,9 +217,14 @@ def p_expressao_classes(p):
 def p_error(p):
     if p:
         print(f"Erro sintático: Erro de sintaxe em '{p.value}' na linha {p.lineno}, posição {p.lexpos}")
-        print(f"Trecho do código: {file.splitlines()[p.lineno - 1]}")
+        # Verifica se o número da linha está dentro dos limites do código
+        if p.lineno - 1 < len(file.splitlines()):
+            print(f"Trecho do código: {file.splitlines()[p.lineno - 1]}")
+        else:
+            print("Trecho do código indisponível")
     else:
         print("Erro sintático: Fim inesperado do arquivo")
+
 
 def p_empty(p):
     '''
