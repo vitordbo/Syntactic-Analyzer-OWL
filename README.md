@@ -9,6 +9,8 @@ Professor: Dr. Patricio de Alencar Silva
 
 Este é um analisador sintático para a linguagem OWL (Web Ontology Language) implementado em Python usando a biblioteca PLY (Python Lex-Yacc). O código é projetado para analisar expressões OWL presentes em um arquivo de texto e fornecer um resumo estatístico.
 
+Os arquivos parser.out e parsetab.py são gerados com dados baseados no arquivo de teste (dados.txt ou dados2.txt) 
+
 * Instalação:
 
 Certifique-se de ter o Python e o pip instalados em seu sistema. Em seguida, execute os seguintes comandos para instalar as dependências necessárias:
