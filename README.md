@@ -35,11 +35,25 @@ Se você estiver usando o VSCode, pode abrir o diretório do projeto diretamente
 
 Basta executar o seguinte comando: 
 ```bash
-python App.py
+python App.py 
+```
+ou
+```bash
+python3 App.py 
 ```
 ou apertar o botão de Run do VSCode:
 
 ![image](https://github.com/vitordbo/Syntactic-Analyzer-OWL/assets/65680799/3efcd8c4-8cc0-4bc8-8a70-be8f6711ed81)
+
+## Resultados
+Saídas detalhadas podem ser enonctradas nos 2 seguintes arquivos: 
+```bash
+parser.out
+```
+```bash
+parsetab.py
+```
+Em caso de mudança do arquivo teste, é necessário deletar os arquivos e rodar novamente a aplicação para que os mesmos sejam atualizados
 
 ## Visualização do Resumo
 Além da saída dos dados via terminal, o código gera uma tabela resumo e a salva como uma imagem. A tabela é salva como "resumo_tabela.png" no diretório do projeto.
